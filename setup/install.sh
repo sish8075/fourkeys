@@ -49,17 +49,21 @@ gcloud projects add-iam-policy-binding ${FOURKEYS_PROJECT} --member="serviceAcco
 
 # launch container builds in background/parallel
 gcloud builds submit ../event_handler --tag=gcr.io/${FOURKEYS_PROJECT}/event-handler --project=${PARENT_PROJECT} > event_handler.containerbuild.log & 
+sleep 1.5m
 
 if [[ ! -z "$GIT_SYSTEM" ]]; then
     gcloud builds submit ../bq-workers/${GIT_SYSTEM}-parser --tag=gcr.io/${FOURKEYS_PROJECT}/${GIT_SYSTEM}-parser --project=${PARENT_PROJECT} > ${GIT_SYSTEM}-parser.containerbuild.log & 
+    sleep 1.5m
 fi
 
 if [[ ! -z "$CICD_SYSTEM" && "$CICD_SYSTEM" != "$GIT_SYSTEM" ]]; then
     gcloud builds submit ../bq-workers/${CICD_SYSTEM}-parser --tag=gcr.io/${FOURKEYS_PROJECT}/${CICD_SYSTEM}-parser --project=${PARENT_PROJECT} > ${CICD_SYSTEM}-parser.containerbuild.log & 
+    sleep 1.5m
 fi
 
 # Dashboard image
 gcloud builds submit ../dashboard --tag=gcr.io/${FOURKEYS_PROJECT}/fourkeys-grafana-dashboard --project=${PARENT_PROJECT} > fourkeys-grafana-dashboard.containerbuild.log & 
+sleep 1.5m
 
 # wait for containers to be built, then continue
 wait
