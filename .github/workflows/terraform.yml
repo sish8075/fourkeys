@@ -29,12 +29,13 @@ jobs:
         service_account_email: ${{ secrets.GCP_SA_EMAIL }}
         service_account_key: ${{ secrets.GCP_SA_KEY }}
         project_id: ${{ secrets.GCP_PROJECT_ID }}
+        export_default_credentials: true
 
     # Install the latest version of Terraform CLI
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       
-    - name: Mock scripts
+    - name: Four Keys creation
       working-directory: ./setup
       env: 
         GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
