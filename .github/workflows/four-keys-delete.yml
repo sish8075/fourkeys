@@ -1,0 +1,46 @@
+name: 'Four Keys Deletion'
+
+on:
+  workflow_dispatch: # Allows you to run this workflow manually from the Actions tab
+
+jobs:
+  terraform:
+    name: '4 Keys Delete'
+    runs-on: ubuntu-latest
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner, checkout to $GITHUB_WORKSPACE
+    - name: Checkout
+      uses: actions/checkout@v2
+      
+    - name: Set up gcloud Cloud SDK environment
+      uses: google-github-actions/setup-gcloud@v0.2.0
+      with:
+        service_account_email: ${{ secrets.GCP_SA_EMAIL }}
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        export_default_credentials: true
+
+    # Install the latest version of Terraform CLI
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v1
+
+    - name: Fetch Terraform State File
+      working-directory: ./setup
+      run: gsutil cp gs://shadamn-terraform-bucket/terraform.tfstate . && ls -l | grep tfstate
+
+    # Generates an execution plan for Terraform
+    - name: Terraform Plan Destroy
+      run: terraform plan -destroy
+    
+    #- name: Cloud Storage Upload Terraform State
+    #  uses: google-github-actions/upload-cloud-storage@v0.2.0
+    #  with:
+    #    credentials: ${{ secrets.GCP_SA_KEY }}
+    #    path: ${{ github.workspace }}/setup/terraform.tfstate
+    #    destination: shadamn-terraform-bucket
