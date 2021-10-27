@@ -40,6 +40,7 @@ jobs:
 
     # Generates an execution plan for Terraform destroy
     - name: Terraform Plan Destroy
+      working-directory: ./setup
       run: terraform plan -destroy
     
     #- name: Cloud Storage Upload Terraform State
