@@ -34,6 +34,16 @@ jobs:
       working-directory: ./setup
       run: gsutil cp gs://shadamn-terraform-bucket/terraform.tfstate . && ls -l | grep tfstate
       
+    - name: Create Terraform variable file
+      working-directory: ./setup
+      run: |
+           cat > terraform.tfvars <<EOF
+           google_project_id = "ace-connection-329015"
+           google_region = "us-east1"
+           bigquery_region = "US"
+           parsers = ["github"]
+           EOF
+      
     - name: Terraform init
       working-directory: ./setup
       run: terraform init
