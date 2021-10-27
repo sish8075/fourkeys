@@ -49,5 +49,5 @@ printf "\n"
 echo "••••••••🔑••🔑••🔑••🔑••••••••"
 printf "starting Four Keys setup…\n\n"
 
-terraform init
-source install.sh
+#terraform init
+#source install.sh
