@@ -36,7 +36,7 @@ jobs:
       
     - name: Terraform init
       working-directory: ./setup
-      run: terrform init
+      run: terraform init
 
     # Generates an execution plan for Terraform destroy
     - name: Terraform Plan Destroy
