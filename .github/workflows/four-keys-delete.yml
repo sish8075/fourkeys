@@ -35,6 +35,7 @@ jobs:
       run: gsutil cp gs://shadamn-terraform-bucket/terraform.tfstate . && ls -l | grep tfstate
       
     - name: Terraform init
+      working-directory: ./setup
       run: terrform init
 
     # Generates an execution plan for Terraform destroy
