@@ -30,12 +30,12 @@ jobs:
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       
-    #- name: Four Keys creation
-    #  working-directory: ./setup
-    #  env: 
-    #    GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-    #  run: | 
-    #    ./setup_customization.sh
+    - name: Four Keys creation
+      working-directory: ./setup
+      env: 
+        GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
+      run: | 
+        ./setup_customization.sh
 
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
