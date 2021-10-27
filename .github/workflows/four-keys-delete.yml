@@ -33,8 +33,11 @@ jobs:
     - name: Fetch Terraform State File
       working-directory: ./setup
       run: gsutil cp gs://shadamn-terraform-bucket/terraform.tfstate . && ls -l | grep tfstate
+      
+    - name: Terraform init
+      run: terrform init
 
-    # Generates an execution plan for Terraform
+    # Generates an execution plan for Terraform destroy
     - name: Terraform Plan Destroy
       run: terraform plan -destroy
     
