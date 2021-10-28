@@ -1,5 +1,5 @@
 # Setup before running install.sh
-# Purpose is to set the following variables:
+# Purpose is to set the following env variables:
 #   GIT_SYSTEM
 #   CICD_SYSTEM
 #   PARENT_PROJECT
@@ -49,5 +49,4 @@ printf "\n"
 echo "••••••••🔑••🔑••🔑••🔑••••••••"
 printf "starting Four Keys setup…\n\n"
 
-terraform init
 source install.sh
