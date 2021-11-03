@@ -8,7 +8,6 @@ jobs:
     name: 'Deploy Four Keys'
     runs-on: ubuntu-latest
 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
@@ -33,20 +32,11 @@ jobs:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
-
-    # Checks that all Terraform configuration files adhere to a canonical format
-    - name: Terraform Format
-      run: terraform fmt -check
       
     - name: Four Keys creation
       env: 
         GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
       run: ./setup_customization.sh
-
-    # Generates an execution plan for Terraform
-    #- name: Terraform Plan
-    #  working-directory: ./setup
-    #  run: terraform plan
 
     # On push to main, build or change infrastructure according to Terraform configuration files
     #- name: Terraform Apply
