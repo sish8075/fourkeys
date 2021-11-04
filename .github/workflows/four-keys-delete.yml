@@ -42,9 +42,8 @@ jobs:
       run: terraform init
 
     # Generates an execution plan for Terraform destroy
-    - name: Terraform Plan Destroy
-      run: terraform plan -destroy
+    #- name: Terraform Plan Destroy
+    #  run: terraform plan -destroy
     
-    #- name: Terraform Destroy
-    #  working-directory: ./setup
-    #  run: terraform destroy -auto-approve
+    - name: Terraform Destroy
+      run: terraform destroy -auto-approve
