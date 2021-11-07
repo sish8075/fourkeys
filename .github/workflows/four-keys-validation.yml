@@ -7,11 +7,16 @@ jobs:
   four-keys-validation:
     name: 'Validation'
     runs-on: ubuntu-latest
-
     defaults:
       run:
         shell: bash
-        working-directory: ./setup
+        working-directory: terraform
+    env:
+      FOURKEYS_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
+      FOURKEYS_REGION: us-east1
+      BIGQUERY_REGION: US
+      GIT_SYSTEM: github
+      TF_BACKEND_BUCKET: shadamn-4keys-terraform-state
 
     steps:
     - name: Checkout
@@ -25,22 +30,14 @@ jobs:
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         export_default_credentials: true
 
-    # Install the latest version of Terraform CLI
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
 
     - name: Create terraform.tfvars
-      env: 
-        BIGQUERY_REGION: US
-        FOURKEYS_REGION: us-east1
-        FOURKEYS_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
-        GIT_SYSTEM: github
       run: ./set_terraform_vars.sh
     
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
 
-    # Generates an execution plan for Terraform
     - name: Terraform Plan
       run: terraform plan
