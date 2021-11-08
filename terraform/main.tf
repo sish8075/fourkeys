@@ -10,6 +10,7 @@ terraform {
 module "foundation" {
   source     = "./modules/fourkeys-foundation"
   project_id = var.project_id
+  region     = var.region
 }
 
 module "bigquery" {
