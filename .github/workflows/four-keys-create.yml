@@ -1,4 +1,4 @@
-name: 'Four Keys Creation'
+name: 'Four Keys Create'
 
 on:
   workflow_dispatch:
@@ -7,11 +7,16 @@ jobs:
   deploy-four-keys:
     name: 'Deploy Four Keys'
     runs-on: ubuntu-latest
-
     defaults:
       run:
         shell: bash
-        working-directory: ./setup
+        working-directory: terraform
+    env:
+      TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID }}
+      TF_VAR_region: us-east1
+      TF_VAR_bigquery_region: US
+      TF_VAR_parsers: '["github"]'
+      TF_VAR_backend_bucket: shadamn-4keys-terraform-state
 
     steps:
     - name: Checkout
@@ -25,18 +30,14 @@ jobs:
         project_id: ${{ secrets.GCP_PROJECT_ID }}
         export_default_credentials: true
 
-    # Install the latest version of Terraform CLI
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
     
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Terraform Init
       run: terraform init
       
     - name: Four Keys creation
-      env: 
-        GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-      run: ./setup_customization.sh
+      run: terraform apply -auto-approve
 
     # On push to main, build or change infrastructure according to Terraform configuration files
     #- name: Terraform Apply

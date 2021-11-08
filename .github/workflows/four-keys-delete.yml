@@ -7,12 +7,17 @@ jobs:
   terraform:
     name: '4 Keys Destroy'
     runs-on: ubuntu-latest
-
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
         shell: bash
-        working-directory: ./setup
+        working-directory: terraform
+    env:
+      TF_VAR_project_id: ${{ secrets.GCP_PROJECT_ID }}
+      TF_VAR_region: us-east1
+      TF_VAR_bigquery_region: US
+      TF_VAR_parsers: '["github"]'
+      TF_VAR_backend_bucket: shadamn-4keys-terraform-state
+
 
     steps:
     - name: Checkout
@@ -28,15 +33,6 @@ jobs:
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
-      
-    - name: Create Terraform variable file
-      run: |
-           cat > terraform.tfvars <<EOF
-           google_project_id = "ace-connection-329015"
-           google_region = "us-east1"
-           bigquery_region = "US"
-           parsers = ["github"]
-           EOF
            
     - name: Terraform init
       run: terraform init
