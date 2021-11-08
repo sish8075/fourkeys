@@ -21,13 +21,6 @@ FOURKEYS_REGION="us-east1" # region for Four Keys resources
 BIGQUERY_REGION="US" # location for Four Keys BQ resources, US or EU
 GENERATE_DATA="no"
 
-CLEAN="false"
-if [[ ${CLEAN} == 'true' ]]
-then
-    # purge all local terraform state
-    rm -rf .terraform* *.containerbuild.log terraform.tfstate* terraform.tfvars
-fi
-
 PARSERS=""
 for PARSER in ${GIT_SYSTEM}; do
     if [ "${PARSERS}" == "" ]; then
@@ -39,8 +32,8 @@ done
 
 # create a tfvars file
 cat > terraform.tfvars <<EOF
-google_project_id = "${FOURKEYS_PROJECT}"
-google_region = "${FOURKEYS_REGION}"
+project_id = "${FOURKEYS_PROJECT}"
+region = "${FOURKEYS_REGION}"
 bigquery_region = "${BIGQUERY_REGION}"
 parsers = [${PARSERS}]
 EOF
@@ -49,4 +42,4 @@ printf "\n"
 echo "••••••••🔑••🔑••🔑••🔑••••••••"
 printf "starting Four Keys setup…\n\n"
 
-source install.sh
+#source install.sh
