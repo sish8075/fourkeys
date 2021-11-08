@@ -30,3 +30,13 @@ module "github_parser" {
   region                         = var.region
   fourkeys_service_account_email = module.foundation.fourkeys_service_account_email
 }
+
+module "dashboard_service" {
+  source                         = "./modules/fourkeys-dashboard"
+  project_id                     = var.project_id
+  region                         = var.region
+  fourkeys_service_account_email = module.foundation.fourkeys_service_account_email
+  depends_on = [
+    module.foundation
+  ]
+}
