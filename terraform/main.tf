@@ -22,14 +22,14 @@ module "bigquery" {
   ]
 }
 
-module "github_parser" {
-  source                         = "./modules/fourkeys-data-source"
-  for_each                       = toset(var.parsers)
-  project_id                     = var.project_id
-  parser_service_name            = each.key
-  region                         = var.region
-  fourkeys_service_account_email = module.foundation.fourkeys_service_account_email
-  depends_on = [
-    module.foundation
-  ]
-}
+#module "github_parser" {
+#  source                         = "./modules/fourkeys-data-source"
+#  for_each                       = toset(var.parsers)
+#  project_id                     = var.project_id
+#  parser_service_name            = each.key
+#  region                         = var.region
+#  fourkeys_service_account_email = module.foundation.fourkeys_service_account_email
+#  depends_on = [
+#    module.foundation
+#  ]
+#}

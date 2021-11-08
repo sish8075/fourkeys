@@ -4,9 +4,8 @@ data "google_project" "project" {
 
 module "gcloud_build_data_source" {
   source                 = "terraform-google-modules/gcloud/google"
-  version                = "~> 2.0"
+  version                = "~> 3.0"
   platform               = "linux"
-  additional_components  = []
   create_cmd_entrypoint  = "gcloud"
   create_cmd_body        = "builds submit ${path.module}/bq-workers/${var.parser_service_name}-parser --tag=gcr.io/${var.project_id}/${var.parser_service_name}-parser --project=${var.project_id}"
   destroy_cmd_entrypoint = "gcloud"
